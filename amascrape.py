@@ -59,11 +59,11 @@ class AmazonScraper:
 			
 ################################
 ## simple run-cycle for debug ##
-def doscrape():				  ##
-	import os				  ##
-	os.environ["PATH"] = os.environ["PATH"]+";."
-	s=AmazonScraper()		  ##
-	s.navToCategory("Headphones", "earbud headphones")
-	s.scrapeProducts()		  ##
-	return s				  ##
+def doscrape():               ##
+    import os                 ##
+    os.environ["PATH"] = os.environ["PATH"]+";."
+    s=AmazonScraper()         ##
+    s.navToCategory("Headphones", "earbud headphones")
+    s.scrapeProducts()        ##
+    return s                  ##
 ################################

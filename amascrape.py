@@ -1,4 +1,6 @@
 from selenium import webdriver
+import os
+os.environ["PATH"] = os.environ["PATH"]+";."
 
 class AmazonProduct:
 	link = ""
@@ -56,12 +58,22 @@ class AmazonScraper:
 			prodbaton = AmazonProduct()
 			prodbaton.dataOne(link, name, brand, price, asin)
 			self.PRODUCTS += [prodbaton]
-			
+	def getCategories(self):
+		self.wh.get("https://www.amazon.com/gp/site-directory/ref=nav_shopall_btn")
+		depts = self.wh.find_elements_by_class_name("fsdDeptLink")
+		return [d.text for d in depts]
+	def getSubCategories(self, category):
+		self.wh.get("https://www.amazon.com/gp/site-directory/ref=nav_shopall_btn")
+		depts = self.wh.find_elements_by_class_name("fsdDeptLink")
+		for dept in depts:
+			if dept.text.lower() == category.lower():
+				dept.click()
+				break
+		subcats = self.wh.find_elements_by_class_name("list-item__category-link")
+		return [sc.text for sc in subcats]
 ################################
 ## simple run-cycle for debug ##
 def doscrape():               ##
-    import os                 ##
-    os.environ["PATH"] = os.environ["PATH"]+";."
     s=AmazonScraper()         ##
     s.navToCategory("Headphones", "earbud headphones")
     s.scrapeProducts()        ##

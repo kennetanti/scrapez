@@ -27,13 +27,15 @@ class AmazonScraper:
 	PRODUCTS = []
 	def __init__(self):
 		self.wh = webdriver.Chrome()
-	def navToCategory(self, category, subcategory):
+	def navToCategory(self, category, subcategory=None):
 		self.wh.get("https://www.amazon.com/gp/site-directory/ref=nav_shopall_btn")
 		depts = self.wh.find_elements_by_class_name("fsdDeptLink")
 		for dept in depts:
 			if dept.text.lower() == category.lower():
 				dept.click()
 				break
+		if subcategory is None:
+			return
 		subcats = self.wh.find_elements_by_class_name("list-item__category-link")
 		for sc in subcats:
 			if sc.text.lower() == subcategory.lower():
